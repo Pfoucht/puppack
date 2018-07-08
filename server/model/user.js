@@ -47,12 +47,6 @@ userSchema.methods.comparePassword = function(userPassword, cb){
     });
 };
 
-// Example usage of comparePassword
-// user.comparePassword('password123', function(err, isMatch){
-//     if ( err ) throw err;
-//     console.log(isMatch)  ----> true
-// }
-
 
 module.exports = mongoose.model('User', userSchema);
 
