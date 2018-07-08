@@ -22,7 +22,7 @@ mongoose.connection.on('connected', function(){
 });
 
 mongoose.connection.on('error', function(err){
-    console.log('Mongoose error: ' + err)
+    console.log('Mongoose error: ' + err);
 });
 
 app.use(cors());

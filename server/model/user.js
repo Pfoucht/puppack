@@ -17,7 +17,7 @@ const userSchema = new Schema({
     friends: [],
     posts: [],
     images: [ { type: String } ], // Decide on how to handle images, imageCDN, or store image itself
-    dateCreated: {type: Date, default: Date.now}
+    dateJoined: {type: Date, default: Date.now}
 
 });
 
