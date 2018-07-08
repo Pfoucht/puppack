@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 const saltRounds = 10;
 
@@ -7,7 +7,7 @@ const saltRounds = 10;
 
 const userSchema = new Schema({
 
-    username: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
     password: { type: String, required: true }, // Encrypt pw
     dogName: { type: String}, // Currently setup for one dog
     dogBirth: { type: Date },
@@ -17,27 +17,27 @@ const userSchema = new Schema({
     friends: [],
     posts: [],
     images: [ { type: String } ], // Decide on how to handle images, imageCDN, or store image itself
+    dateCreated: {type: Date, default: Date.now}
 
 });
 
-
 // Encryption & Decryption
-
 
 userSchema.pre('save', function(next){
     var user = this;
 
-    if(!user.isModified('passowrd')) return next();
+    if(!user.isModified('password')) return next();
 
-    bcrypt.hash(user.password, saltRounds, function(err, hash){
+    bcrypt.genSalt(saltRounds, function(err, salt){
         if(err) return next(err);
-        // Overide text password with hash
-        user.password = hash;
-        next();
+        bcrypt.hash(user.password, salt, function(err, hash){
+            if(err) return next(err);
+            // Override text password with hash
+            user.password = hash;
+            next();
+        });
     });
 });
-
-
 
 
 userSchema.methods.comparePassword = function(userPassword, cb){
@@ -52,9 +52,6 @@ userSchema.methods.comparePassword = function(userPassword, cb){
 //     if ( err ) throw err;
 //     console.log(isMatch)  ----> true
 // }
-
-
-
 
 
 module.exports = mongoose.model('User', userSchema);

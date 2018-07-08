@@ -5,6 +5,10 @@ const cors = require('cors');
 
 const app = express();
 
+//Routes
+let userRoutes = require('./routes/user');
+
+
 //ENV VARIABLES 
 const port = 8080;
 
@@ -23,6 +27,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
+app.use('/user', userRoutes);
 
 app.listen(port, function(){
     console.log('App running on ' + port)
