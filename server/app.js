@@ -11,7 +11,7 @@ const app = express();
 let userRoutes = require('./routes/user');
 
 
-//ENV VARIABLES 
+//Env Variables
 const port = 8080;
 
 
