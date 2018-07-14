@@ -4,6 +4,29 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 
+
+exports.getUser = function(req, res, next){
+    User.find({ username: req.body.username })
+        .then(user => {
+            //return information for profile page
+            //Switch to populating dog ref in future
+            return res.json({
+                username: user.username,
+                dogName: user.dogName,
+                dogLevel: user.dogLevel,
+                friends: user.friends.length,
+                posts: user.posts,
+                dogWeight: user.dogWeight,
+                dogBirth: user.dogBirth,
+                dogImages: user.dogImages,
+                events: user.events,
+                tricksLearned: user.tricksLearned
+            })
+        })
+        .catch(error => res.status(400).json({ error: error }));
+};
+
+
 exports.signUp = function(req, res, next){
     let user = new User({
         username: req.body.username,

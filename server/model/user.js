@@ -13,11 +13,15 @@ const userSchema = new Schema({
     dogBirth: { type: Date },
     dogWeight: { type: Number },
     dogLevel: { type: String, default: 'Beginner' },
-    tricksLearned: { type: String },
+    tricksLearned: [],
+    currentTrick: { type: String }, // Store id to the trick model
+    dogImages: [], //Store url of pics
     friends: [],
     posts: [],
+    events: [],
     images: [ { type: String } ], // Decide on how to handle images, imageCDN, or store image itself
-    dateJoined: {type: Date, default: Date.now}
+    dateJoined: {type: Date, default: Date.now},
+    location : {type: Any}
 
 });
 
